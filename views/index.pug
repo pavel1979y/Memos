@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Memos</title>
+
+	<link rel="shortcut icon" href="/img/favicon.png" type="image/png">
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+	<link rel="stylesheet" href="css/hamburgers.css">
+	<link rel="stylesheet" href="css/index.css">
+	<link rel="stylesheet" href="css/colors.css">
+
+</head>
+<body>
+
+include nav-bar.pug
+
+	<div class="content">
+
+		<div class="container">
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered" role="document" id="show-modal-body">
+					
+				</div>
+			</div>
+		</div>
+	
+		<div class="memos" id="all-memos">
+		
+			each memo in userMemos
+				div(class=`card memo ${memo.memoColor}` id=`${memo.memoid}`)
+					if memoImage
+						<img class="card-img-top" src="../img/test001.jpg" alt="Card image cap">
+					<div class="card-body">
+						<h5 class="card-title">#{memo.memoTitle}</h5>
+						<p class="card-text">#{memo.memoDescription}</p>
+					</div>
+					if memo.memoList.length > 0
+						<div class="card-body">
+						<h6 class="card-title card-links-heading">Список:</h6>
+						each listItem in memo.memoList
+							div(class="form-check" data-replace=`${listItem.listItemStatus}`)
+								input(class="form-check-input hidden-box" type="checkbox" id=`${listItem.listItemId}` checked=listItem.listItemStatus)
+								label(class="form-check-label list-label" for=`${listItem.listItemId}`) <span class="list-label__box"></span> <span class="list-label__text"> #{listItem.listItem}</span>
+						</div>
+					if memo.memoLinks.length > 0
+						<div class="card-body card-links-container">
+							<h6 class="card-title card-links-heading">Лінки:</h6>
+							<ul class="card-links-list">
+							each link in memo.memoLinks
+								li #[a(href=`${link.link}` target="_blank") #{link.linkText}]
+							</ul>
+						</div>
+					if memo.memoDate
+						<div class="card-footer memo-date">
+							<small>Строк: #{memo.memoDate}</small>
+						</div>
+					<div class="card-footer memo-actions-container">
+						<ul class="memo-actions-list">
+							<button class="memo-update" data-toggle="modal" data-target="#myModal" title="Редагувати нотатку"><li><i class="fas fa-pen"></i></li></button>
+							<button class="memo-delete" title="Видалити нотатку"><li><i class="fas fa-trash-alt"></i></li>
+							<button class="memo-archive" title="Відправити нотатку в архів"><li><i class="fas fa-archive"></i></li>
+						</ul>
+					</div>
+
+
+		</div>
+
+	</div>
+<script src="../js/jquery-3.3.1.min.js"></script>
+<script src="../js/popper.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

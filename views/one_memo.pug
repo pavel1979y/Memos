@@ -1,0 +1,36 @@
+div(class=`card memo ${userMemo.memoColor}` id=`${userMemo.memoid}` style="min-width: 18rem; max-width: 35rem;")
+	if memoImage
+		<img class="card-img-top" src="../img/test001.jpg" alt="Card image cap">
+	if userMemo.memoTitle
+		<div class="card-body">
+			<h5 class="card-title">#{userMemo.memoTitle}</h5>
+			<p class="card-text">#{userMemo.memoDescription}</p>
+		</div>
+	if userMemo.memoList.length > 0
+		<div class="card-body">
+		<h6 class="card-title card-links-heading">Список:</h6>
+		each listItem in userMemo.memoList
+			<div class="form-check">
+				input(class="form-check-input hidden-box" type="checkbox" id=`${listItem.listItemId}` checked=listItem.listItemStatus)
+				label(class="form-check-label list-label" for=`${listItem.listItemId}`) <span class="list-label__box"></span> <span class="list-label__text"> #{listItem.listItem}</span>
+			</div>
+		</div>
+	if userMemo.memoLinks.length > 0
+		<div class="card-body card-links-container">
+			<h6 class="card-title card-links-heading">Лінки:</h6>
+			<ul class="card-links-list">
+			each link in userMemo.memoLinks
+				li #[a(href=`${link.link}` target="_blank") #{link.linkText}]
+			</ul>
+		</div>
+	if userMemo.memoDate
+		<div class="card-footer memo-date">
+			<small>Строк: #{userMemo.memoDate}</small>
+		</div>
+	<div class="card-footer memo-actions-container">
+		<ul class="memo-actions-list">
+			<button class="memo-update" data-toggle="modal" data-target="#myModal" title="Редагувати нотатку"><li><i class="fas fa-pen"></i></li></button>
+			<button class="memo-delete" title="Видалити нотатку"><li><i class="fas fa-trash-alt"></i></li>
+			<button class="memo-archive" title="Відправити нотатку в архів"><li><i class="fas fa-archive"></i></li>
+		</ul>
+	</div>
